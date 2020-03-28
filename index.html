@@ -1,0 +1,23 @@
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://npm-scalableminds.s3.eu-central-1.amazonaws.com/@scalableminds/chatroom@master/dist/Chatroom.css" />
+</head>
+<body>
+  <div class="chat-container" style="height:100vh;"></div>
+
+  <script src="https://npm-scalableminds.s3.eu-central-1.amazonaws.com/@scalableminds/chatroom@master/dist/Chatroom.js"/></script>
+  <script type="text/javascript">
+    var chatroom = new window.Chatroom({
+      host: "http://localhost:5005",
+      title: "TechnoBuilders",
+      container: document.querySelector(".chat-container"),
+      welcomeMessage: "Hello Chotu",
+      speechRecognition: "en-IN",
+      voiceLang: "en-IN",
+    });
+    chatroom.openChat();
+  </script>
+</body>
+
+</html>

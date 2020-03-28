@@ -1,0 +1,49 @@
+session_config:
+  session_expiration_time: 60.0
+  carry_over_slots_to_new_session: true
+intents:
+- greet
+- goodbye
+- hero
+- name
+- feeling
+- prob_time
+- answer
+responses:
+  utter_greet:
+  - text: hello friend which is your favorite hero.
+  utter_hero:
+  - text: Ok so I am Light Yagmi, now tell me what is your name.
+  utter_fever:
+  - text: Do you have fever?
+  utter_sorethrot:
+  - text: problem of sore  throat
+  utter_cough:
+  - text: do you have cough ?
+  utter_vomit:
+  - text: any cases of vomit?
+  utter_fatigue:
+  - text: fatigue?
+  utter_runnynose:
+  - text: do you have runny nose?
+  utter_breathe:
+  - text: do you feel breathelessness?
+  utter_pain:
+  - text: do you have abdominal pain?
+  utter_rash:
+  - text: any cases of rashes or inflamation?
+  utter_goodbye:
+  - text: Ok I got your problem chotu, will see you soon, till then take care good bye.
+actions:
+- utter_greet
+- utter_hero
+- utter_fever
+- utter_sorethrot
+- utter_cough
+- uuter_vomit
+- utter_fatigue
+- utter_runnynoe
+- utter_breathe
+- utter_pain
+- utter_rash
+- utter_goodbye

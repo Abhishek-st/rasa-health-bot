@@ -1,0 +1,205 @@
+<html>
+  <head>
+<style>
+    body
+{
+font-family: Garamond;
+background-color: black;
+}
+h1
+{
+color: black;
+margin-bottom: 0;
+margin-top: 0;
+text-align: center;
+font-size: 40px;
+}
+h3
+{
+color: black;
+font-size: 20px;
+margin-top: 3px;
+text-align: center;
+}
+#chatbox
+{
+background-color: black;
+margin-left: auto;
+margin-right: auto;
+width: 40%;
+margin-top: 60px;
+}
+#userInput {
+margin-left: auto;
+margin-right: auto;
+width: 40%;
+margin-top: 60px;
+}
+#textInput {
+width: 87%;
+border: none;
+border-bottom: 3px solid #009688;
+font-family: monospace;
+font-size: 17px;
+}
+.buttonInput {
+padding: 3px;
+font-family: monospace;
+font-size: 17px;
+}
+.userText {
+color: white;
+font-family: monospace;
+font-size: 17px;
+text-align: right;
+line-height: 30px;
+}
+.userText span {
+background-color: #009688;
+padding: 10px;
+border-radius: 2px;
+}
+.botText {
+color: white;
+font-family: monospace;
+font-size: 17px;
+text-align: left;
+line-height: 30px;
+}
+.botText span {
+background-color: #EF5350;
+padding: 10px;
+border-radius: 2px;
+}
+#tidbit {
+position:absolute;
+bottom:0;
+right:0;
+width: 300px;
+}
+</style>
+  </head>
+  <body>
+    //<p onclick="lol()" id="demo"> 
+      //lol
+    //</p>
+    //<p onclick="press()">
+     // press me
+    //<p>
+    //<p id = "result" onclick="pre()">
+    //play me
+    //</p>
+
+<div>
+<div id="chatbox">
+<p class="botText"><span>Hello chotu</span></p>
+</div>
+<div id="userInput">
+<input id="textInput" type="text" name="msg" placeholder="Message">
+<input class="buttonInput" type="submit" value="Record" onclick="lol()">
+<input class="buttonInput" type="submit" value="Send" onclick="pre()">
+</div>
+</div>
+
+
+    <script>
+      let speechToText
+      let l = []
+      function lol(){
+	influ = "1,1,1,1,1,1,0,0,0";
+	asth = "0,0,1,1,1,0,1,0,0";
+	skin = "1,0,0,0,0,0,0,0,1";
+
+        window.SpeechRecognition = window.webkitSpeechRecognition;
+            const recognition = new window.SpeechRecognition();
+            recognition.lang = "en-IN"
+            recognition.onresult = (event) => {
+             speechToText = event.results[0][0].transcript;
+            console.log(speechToText)
+	    	var userHtml = '<p class="userText"><span>' + speechToText + '</span></p>';
+			document.getElementById('textInput').value = ''
+			document.getElementById('chatbox').innerHTML += userHtml
+			document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+			if(speechToText=="no" || speechToText=="No" || speechToText=="NO")
+				l.push(0)
+			if(speechToText=="yes" || speechToText=="Yes" || speechToText=="YES")
+				l.push(1)
+			
+			if(l.length==9){
+				x = l.toString()
+if(x==influ){
+		var botHtml = '<p class="botText"><span>' + "you have influenza" + '</span></p>';	
+		document.getElementById('chatbox').innerHTML += botHtml	
+var msg = new SpeechSynthesisUtterance("you have influenza");
+window.speechSynthesis.speak(msg);
+}
+if(x==asth){
+		var botHtml = '<p class="botText"><span>' + "you have asthma" + '</span></p>';	
+		document.getElementById('chatbox').innerHTML += botHtml	
+var msg = new SpeechSynthesisUtterance("you have asthma");
+window.speechSynthesis.speak(msg);
+}
+if(x==skin){
+		var botHtml = '<p class="botText"><span>' + "you have skin disease" + '</span></p>';	
+		document.getElementById('chatbox').innerHTML += botHtml	
+var msg = new SpeechSynthesisUtterance("you have skin disease");
+window.speechSynthesis.speak(msg);
+}
+		}
+
+			console.log(l)
+                }
+
+                recognition.start();
+
+
+                // recognition.onaudioend = () =>{
+    
+                // }
+      }
+
+function pre(){
+//var rawText = $("#textInput").val();
+//setTimeout(,4000);
+
+
+//$("#chatbox").append(userHtml);
+
+
+	fetch("http://localhost:5005/webhooks/rest/webhook", { 
+      
+    // Adding method type 
+    method: "POST", 
+      
+    // Adding body or contents to send 
+    body: JSON.stringify({ 
+        sender: "Abhishek", 
+        message: speechToText,  
+    }), 
+      
+    // Adding headers to the request 
+    headers: { 
+        "Content-type": "application/json; charset=UTF-8"
+    } 
+}) 
+  
+// Converting to JSON 
+.then(response => response.json()) 
+  
+// Displaying results to console 
+.then(json => {
+		var botHtml = '<p class="botText"><span>' + json[0].text + '</span></p>';	
+		document.getElementById('chatbox').innerHTML += botHtml	
+var msg = new SpeechSynthesisUtterance(json[0].text);
+window.speechSynthesis.speak(msg);	
+		console.log(json[0].text);
+
+});
+
+
+}
+
+   
+    </script>
+  </body>
+</html>
